@@ -95,7 +95,7 @@ SiliconFlow charges based on token usage. Different models have different pricin
 
 ## Integration Notes
 
-1. **Proxy Required in China**: Mainland China users may need to use a proxy to access the API
+1. **Direct Access in China**: SiliconFlow API is directly accessible from Mainland China without proxy
 2. **SSL Certificates**: Some environments may have SSL certificate verification issues
 3. **Currency**: All balances are in Chinese Yuan (CNY, 元)
 4. **Precision**: Balances are returned as strings with 4 decimal places

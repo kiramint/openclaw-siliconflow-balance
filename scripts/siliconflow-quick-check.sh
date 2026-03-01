@@ -13,14 +13,15 @@ if [ ! -f "$PYTHON_SCRIPT" ]; then
     exit 1
 fi
 
-# 设置代理（如果需要）
-if [ -n "$HTTPS_PROXY" ] || [ -n "$HTTP_PROXY" ]; then
-    echo "🔗 检测到代理设置"
-    
-    # 传递给Python环境
-    export https_proxy="${HTTPS_PROXY:-$HTTP_PROXY}"
-    export http_proxy="${HTTP_PROXY:-$HTTPS_PROXY}"
-fi
+echo "注意: SiliconFlow API直接连接，不使用代理（中国大陆可直连）"
+echo "----------------------------------------------"
+
+# 明确不设置代理，让Python脚本直接连接SiliconFlow
+# 清除可能存在的代理环境变量，确保直接连接
+unset https_proxy
+unset http_proxy
+unset HTTPS_PROXY
+unset HTTP_PROXY
 
 # 运行Python脚本
 python3 "$PYTHON_SCRIPT"

@@ -44,7 +44,7 @@ def get_siliconflow_api_key(config):
         print(f"❌ 提取API密钥失败: {e}")
         return None
 
-def query_balance(api_key, proxy=None):
+def query_balance(api_key):
     """查询SiliconFlow余额"""
     url = "https://api.siliconflow.cn/v1/user/info"
     headers = {
@@ -52,13 +52,12 @@ def query_balance(api_key, proxy=None):
         "Content-Type": "application/json"
     }
     
-    # 设置代理
-    if proxy:
-        proxy_support = urllib.request.ProxyHandler({'https': proxy, 'http': proxy})
-        opener = urllib.request.build_opener(proxy_support)
-        urllib.request.install_opener(opener)
-    
+    # 明确移除代理设置，SiliconFlow API在中国大陆可直接访问
     try:
+        # 创建无代理的opener
+        opener = urllib.request.build_opener()
+        urllib.request.install_opener(opener)
+        
         req = urllib.request.Request(url, headers=headers)
         with urllib.request.urlopen(req, timeout=15) as response:
             data = response.read().decode("utf-8")
@@ -77,7 +76,7 @@ def query_balance(api_key, proxy=None):
             import ssl
             ssl._create_default_https_context = ssl._create_unverified_context
             # 重试一次
-            return query_balance(api_key, proxy)
+            return query_balance(api_key)
         return None
     except Exception as e:
         print(f"❌ 请求异常: {e}")
@@ -142,18 +141,10 @@ def main():
         sys.exit(1)
     
     print(f"✅ 已从OpenClaw配置获取API密钥（前8位: {api_key[:8]}...）")
+    print("📡 正在请求SiliconFlow API（直接连接，不使用代理）...")
     
-    # 3. 设置代理（可选）
-    proxy = None
-    # 可以从环境变量读取代理
-    proxy_env = os.environ.get('https_proxy') or os.environ.get('HTTPS_PROXY') or os.environ.get('http_proxy') or os.environ.get('HTTP_PROXY')
-    if proxy_env:
-        proxy = proxy_env
-        print(f"🔗 使用代理: {proxy}")
-    
-    # 4. 查询余额
-    print("📡 正在请求API...")
-    balance_info = query_balance(api_key, proxy)
+    # 3. 查询余额（直接连接，不设置代理）
+    balance_info = query_balance(api_key)
     
     # 5. 输出结果
     if balance_info:

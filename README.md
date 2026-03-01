@@ -41,9 +41,9 @@ OpenClaw skill for querying SiliconFlow API balance directly from OpenClaw confi
 python scripts/siliconflow-balance-query.py
 ```
 
-### With Proxy (if needed)
+### Direct Connection (中国大陆可直连)
 ```bash
-HTTPS_PROXY=http://127.0.0.1:7890 python scripts/siliconflow-balance-query.py
+python scripts/siliconflow-balance-query.py
 ```
 
 ## Sample Output

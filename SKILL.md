@@ -52,7 +52,7 @@ python scripts/siliconflow-balance-query.py
 ## How It Works
 
 1. **Automatic Configuration Reading**: The script reads `~/.openclaw/openclaw.json` to find SiliconFlow API configuration
-2. **Proxy Support**: Automatically uses proxy settings when available (common for users in China)
+2. **Direct Connection**: SiliconFlow API is accessed directly without proxy (accessible from Mainland China)
 3. **Balance Display**: Shows available balance, recharge balance, and total balance with status indicators
 
 ## Output Example
@@ -92,8 +92,8 @@ This skill works seamlessly with OpenClaw because:
 ### Common Issues
 
 1. **Network Connection Error**
-   - Check your proxy settings: `export HTTPS_PROXY=http://127.0.0.1:7890`
-   - Try without proxy if you have direct access
+   - SiliconFlow API should be directly accessible from Mainland China
+   - If you're outside China, ensure you have proper network access
 
 2. **API Key Not Found**
    - Ensure OpenClaw is configured with SiliconFlow provider
